@@ -20,7 +20,7 @@ class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Text)
     last_name = db.Column(db.Text)
-    excuses = db.relationship('Excuse', backref='student', lazy='dynamic')
+    excuses = db.relationship('Excuse', backref='student', lazy='dynamic', cascade='all,delete')
     # excuses governs attribute on a student.
     # backref gives you an attribute on an excuseis.
     # lazy kwarg governs how the data is being loaded in python.
@@ -42,8 +42,8 @@ def root():
 @app.route('/students', methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
-        new_student = Student(request.form['first_name'],
-                              request.form['last_name'])
+        new_student = Student(first_name=request.form['first_name'],
+                              last_name=request.form['last_name'])
         db.session.add(new_student)
         db.session.commit()
         return redirect(url_for('index'))

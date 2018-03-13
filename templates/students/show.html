@@ -1,12 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 
 <p>
-  {{student.first_name}} {{student.last_name}}
-  <br>
-  <a href="{{url_for('edit', id=student.id)}}">Edit {{ student.first_name }}</a>
+    {{student.first_name}} {{student.last_name}}
+    <br>
+    <a href="{{url_for('edit', id=student.id)}}">Edit {{ student.first_name }}</a>
+    <a href="{{url_for('index_excuses', id=student.id)}}">See {{student.first_name}}'s excuses</a>
 </p>
 
 <form method="POST" action="{{url_for('show', id=student.id)}}?_method=DELETE">
-  <input type="submit" value="X">
+    <input type="submit" value="X">
 </form>
 {% endblock %}
