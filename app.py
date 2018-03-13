@@ -47,17 +47,25 @@ def index():
         db.session.add(new_student)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('index.html', students=Student.query.all())
+    return render_template('students/index.html', students=Student.query.all())
 
+@app.route('/students/<id>/excuses', methods=["GET", "POST"])
+def index_excuses():
+    if request.method == 'POST':
+        new_excuse = Excuse(request.form['content'], request.form['is_believable'])
+        db.session.add(new_excuse)
+        db.session.commit()
+        return redirect(url_for('index_excuses'))
+    return render_template('excuses/index.html', excuses=Student.query.get(id).excuses)
 
 @app.route('/students/new')
 def new():
-    return render_template('new.html')
+    return render_template('students/new.html')
 
 
 @app.route('/students/<int:id>/edit')
 def edit(id):
-    return render_template('edit.html', student=Student.query.get(id))
+    return render_template('students/edit.html', student=Student.query.get(id))
 
 
 @app.route('/students/<int:id>', methods=["GET", "PATCH", "DELETE"])
@@ -73,4 +81,4 @@ def show(id):
         db.session.delete(found_student)
         db.session.commit()
         return redirect(url_for('index'))
-    return render_template('show.html', student=found_student)
+    return render_template('students/show.html', student=found_student)
