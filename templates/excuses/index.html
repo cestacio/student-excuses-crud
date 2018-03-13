@@ -1,16 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
 
-<a href="{{url_for('new')}}">Add a new student</a>
-
-{% for student in students %}
-    <p>
-        {{student.first_name}} {{student.last_name}}
-        <br>
-        <a href="{{url_for('show', id=student.id)}}">See more about {{student.first_name}}</a> |
-        <a href="{{url_for('edit', id=student.id)}}">Edit a student</a>
-    </p>
-{% endfor %}
-
-{% endblock %}
+<a href="{{url_for('new_excuses', id=student.id)}}">Add a new excuse!</a>
+<h1>See all excuses for {{student.first_name}}</h1>
+{% for excuse in student.excuses %}
+<p>
+    {{excuse.content}} {{excuse.is_believable}}
+    <br>
+    <a href="{{url_for('show_excuses', id=student.id, excuse_id=excuse.id)}}">See more excuses from {{student.first_name}}</a>
+</p>
+{% endfor %} {% endblock %}
