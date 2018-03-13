@@ -79,7 +79,7 @@ def show(id):
 def index_excuses(id):
     if request.method == 'POST':
         new_excuse = Excuse(content=request.form['content'], is_believable=
-                            bool(request.form['is_believable']), student_id=id)
+                            request.form['is_believable'] == 'True', student_id=id)
         db.session.add(new_excuse)
         db.session.commit()
         return redirect(url_for('index_excuses', id=id))
@@ -96,7 +96,7 @@ def show_excuses(id, excuse_id):
     found_excuse = Excuse.query.get(excuse_id)
     if request.method == b'PATCH':
         found_excuse.content = request.form['content']
-        found_student.is_believable = bool(request.form['is_believable'])
+        found_excuse.is_believable = request.form['is_believable'] == 'True'
         db.session.add(found_excuse)
         db.session.commit()
         return redirect(url_for('index_excuses', id=id, excuse_id=excuse_id))
