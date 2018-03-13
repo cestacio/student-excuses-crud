@@ -21,8 +21,9 @@ class Student(db.Model):
     first_name = db.Column(db.Text)
     last_name = db.Column(db.Text)
     excuses = db.relationship('Excuse', backref='student', lazy='dynamic')
-    # backref is a reference. it's common to make it the singular name of the table
-    # or the name of the model
+    # excuses governs attribute on a student.
+    # backref gives you an attribute on an excuseis.
+    # lazy kwarg governs how the data is being loaded in python. 
 
 class Excuse(db.Model):
 
